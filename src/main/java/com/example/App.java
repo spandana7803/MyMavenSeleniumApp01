@@ -3,48 +3,43 @@ package com.example;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
+/**
+ * Hello world!
+ *
+ */
 public class App 
 {
-    public static void main(String[] args) 
+    public static void main(String[] args) throws InterruptedException
     {
-        // Set Chrome options for headless execution (Jenkins)
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");              // Run without GUI
-        options.addArguments("--no-sandbox");            // Required for Jenkins/Linux
-        options.addArguments("--disable-dev-shm-usage"); // Overcome limited resource problems
+        WebDriver driver = new ChromeDriver();
 
-        // Initialize WebDriver with options
-        WebDriver driver = new ChromeDriver(options);
+        driver.get("https://www.saucedemo.com/");
+        driver.manage().window().maximize();
 
-        try {
-            // Open website
-            driver.get("https://www.saucedemo.com/");
-            driver.manage().window().maximize();
+        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+        driver.findElement(By.id("login-button")).click();
 
-            // Enter username
-            driver.findElement(By.id("user-name"))
-                  .sendKeys("standard_user");
+        Thread.sleep(5000);
 
-            // Enter password
-            driver.findElement(By.id("password"))
-                  .sendKeys("secret_sauce");
+        driver.get("https://practicetestautomation.com/practice-test-login/");
+        driver.manage().window().maximize();
 
-            // Click login button
-            driver.findElement(By.id("login-button")).click();
+        Thread.sleep(5000);
 
-            // Wait for a few seconds (just to observe execution)
-            Thread.sleep(3000);
+        driver.findElement(By.id("username")).sendKeys("student");
 
-            System.out.println("Login Successful ✅");
+        Thread.sleep(5000);
 
-        } catch (Exception e) {
-            System.out.println("Error occurred ❌");
-            e.printStackTrace();
-        } finally {
-            // Close browser
-            driver.quit();
-        }
+        driver.findElement(By.id("password")).sendKeys("Password123");
+
+        Thread.sleep(5000);
+
+        driver.findElement(By.id("submit")).click();
+
+        Thread.sleep(5000);
+
+        driver.quit();
     }
 }
